@@ -9,9 +9,9 @@ public:
         for(int i{}; i<numRows; ++i){
             for(int j{i}; j<n; j += d){
                 m += s[j];
-                if(i > 0 && i < numRows-1) {
-                    int idx = j+d-2*i;
-                    if(idx < n) m+= s[idx];
+                int idx = j+d-2*i;
+                if(0 < i && i < numRows-1 && idx < n) {
+                    m+= s[idx];
                 }
             }
         }
