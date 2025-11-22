@@ -13,10 +13,9 @@ class Solution {
 public:
     int helper(TreeNode* root, int val){
         if(!root) return 0;
-        if(!root->left && !root->right) return 10*val + root->val;
-        int lsum = helper(root->left, 10*val + root->val);
-        int rsum = helper(root->right, 10*val + root->val);
-        return lsum + rsum;
+        int x = 10*val+root->val;
+        if(!root->left && !root->right) return x;
+        return helper(root->left, x) + helper(root->right, x);
     }
     int sumNumbers(TreeNode* root) {
         return helper(root, 0);
