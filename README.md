@@ -1,4 +1,4 @@
 # LEETCODE
 
-Profile: [@uayanaksha](https://leetcode.com/u/ayanaksha/)
+Profile: [@uayanaksha](https://leetcode.com/u/uayanaksha/)
 
