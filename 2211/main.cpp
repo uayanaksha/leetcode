@@ -1,21 +1,22 @@
 class Solution {
 public:
     int countCollisions(string directions) {
+        const int n=directions.size();
+        int l{}, r=directions.size()-1;
         if(directions.size() < 2) return 0;
-        while(!directions.empty() && directions.back() == 'R'){
-            directions.pop_back();
+        while(l<r && directions[l] == 'L'){
+            ++l;
         }
-        reverse(directions.begin(), directions.end());
-        while(!directions.empty() && directions.back() == 'L'){
-            directions.pop_back();
+        while(r>0 && directions[r] == 'R'){
+            --r;
         }
-        if(directions.size() < 2) return 0;
+        if(r-l+1 < 2) return 0;
         int ctr{}; 
-        while(!directions.empty()){
-            if(directions.back() != 'S'){
+        while(l<=r){
+            if(directions[l] != 'S'){
                 ++ctr;
             }
-            directions.pop_back();
+            ++l;
         }
         return ctr;
     }
