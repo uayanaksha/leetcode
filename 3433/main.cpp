@@ -3,28 +3,24 @@ public:
     int acc{};
     void message_handle(vector<string>& e, vector<int>& m, vector<int>& t) {
         int timestamp = stoi(e[1]);
-        vector<string> v;
-        string s;
-        for (int i{}; i <= e[2].size(); ++i) {
-            if (e[2][i] == ' ' || i == e[2].size()) {
-                v.push_back(s);
-                s = "";
-            } else {
-                s += e[2][i];
-            }
-        }
-        for (string& s : v) {
-            if (s == "ALL") {
-                ++acc;
-            } else if (e[2] == "HERE") {
-                for (int i{}; i < m.size(); ++i) {
-                    if (t[i] == 0 || t[i] + 60 <= timestamp) {
-                        m[i]++;
-                    }
+        if (e[2] == "ALL") {
+            ++acc;
+        } else if (e[2] == "HERE") {
+            for (int i{}; i < m.size(); ++i) {
+                if (t[i] == 0 || t[i] + 60 <= timestamp) {
+                    m[i]++;
                 }
-            } else {
-                int id = stoi(s.substr(2));
-                m[id]++;
+            }
+        } else {
+            string s;
+            for (int i{}; i <= e[2].size(); ++i) {
+                if (e[2][i] == ' ' || i == e[2].size()) {
+                    int id = stoi(s.substr(2));
+                    m[id]++;
+                    s = "";
+                } else {
+                    s += e[2][i];
+                }
             }
         }
     }
@@ -53,4 +49,4 @@ public:
         }
         return mentions;
     }
-};
+};;
