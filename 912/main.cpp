@@ -1,34 +1,20 @@
 class Solution {
 public:
-
-    int partition(vector<int>& v, int l, int r){
-        srand(time(0));
-        int idx = l + rand() % (r-l+1);
-        int p = v[idx], i = l-1, j = l, tmp;
-        tmp = v[idx];
-        v[idx] = v[r];
-        v[r] = tmp;
-        while(j < r){
-            if(v[j] < p){
-                ++i;
-                tmp = v[i];
-                v[i] = v[j];
-                v[j] = tmp;
-            }   ++j;
-        }   ++i;
-        tmp = v[i];
-        v[i] = v[r];
-        v[r] = tmp;
-        return i;
-    }
-    void _sort(vector<int>& v, int l, int r){
-        if(l>=r) return;
-        int p = partition(v, l, r);
-        _sort(v, l, p-1);
-        _sort(v, p+1, r);
-    }
     vector<int> sortArray(vector<int>& nums) {
-        _sort(nums, 0, nums.size()-1);
-        return nums;
+        vector<int> mem(1e5+3, 0), r;
+        int minim = 5e4, maxim = -5e4;
+        for(int &n: nums){
+            int idx = 5e4 + n;
+            minim = min(minim, idx);
+            maxim = max(maxim, idx);
+            mem[idx]++;
+        }
+        while(minim <= maxim){
+            while(mem[minim]--) {
+                r.push_back(minim - 5e4);
+            };
+            ++minim;
+        }
+        return r;
     }
 };
