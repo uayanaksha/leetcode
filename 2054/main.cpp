@@ -1,30 +1,33 @@
 class Solution {
 public:
-    template<typename T> using v = vector<T>;
+    using vi = vector<int>;
     int maxTwoEvents(vector<vector<int>>& events) {
-        int n = events.size();
-        int r{}, m{};
-        v<v<int>> p(2*n);
-        for(int i{}, j{}; i<n; ++i){
-            int val = events[i][2];
-            p[j++] = {events[i][0], 1, val}; 
-            p[j++] = {events[i][1]+1, 0, val}; 
-        }
-        sort(p.begin(), p.end(), [](const auto& x, const auto& y){
-            if(x[0] == y[0]){
-                return x[1] < y[1];
-            }
+        int n = events.size(), maxim{};
+        vi suff_mx(n);
+        sort(events.begin(), events.end(), [](const auto& x, const auto& y){
             return x[0] < y[0];
         });
-        for(int i{}; i<p.size(); ++i){
-            int is_start = p[i][1];
-            int val = p[i][2];
-            if(is_start){
-                r = max(r, m+val);
-            } else {
-                m = max(m, val);
-            }
+        suff_mx[n-1] = events[n-1][2];
+        for(int i=n-2; i>= 0; --i){
+            suff_mx[i] = max(events[i][2], suff_mx[i+1]);
         }
-        return r;
+        for(int i{}; i<n; ++i){
+            int l = i+1, r = n-1;
+            int next_idx = -1;
+            while(l <= r){
+                int m = l + (r-l)/2;
+                if(events[m][0] > events[i][1]){
+                    next_idx = m;
+                    r = m - 1;
+                } else {
+                    l = m + 1;
+                }
+            }
+            if(next_idx > -1){
+                maxim = max(maxim, events[i][2] + suff_mx[next_idx]);
+            }
+            maxim = max(maxim, events[i][2]);
+        }
+        return maxim;
     }
 };
