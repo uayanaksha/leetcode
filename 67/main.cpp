@@ -8,82 +8,59 @@ public:
         reverse(a.begin(), a.end());
         reverse(b.begin(), b.end());
         while (r < an && r < bn) {
-            if (a[r] == '1') {
-                if (b[r] == '1') {
-                    if (carry == 1) {
-                        s = '1' + s;
-                        carry = 1;
-                    } else {
-                        s = '0' + s;
-                        carry = 1;
-                    }
+            int v = ((a[r] - '0') * 4) + ((b[r] - '0') * 2) + carry;
+            switch (v) {
+            case 0b000:
+                s = '0' + s;
+                carry = 0;
+                break;
+            case 0b111:
+                s = '1' + s;
+                carry = 1;
+                break;
+            default:
+                int x = !((a[r] - '0') ^ (b[r] - '0')) ^ carry;
+                if(!x) {
+                    s = '1' + s; carry = 0; 
                 } else {
-                    if (carry == 0) {
-                        s = '1' + s;
-                        carry = 0;
-                    } else {
-                        s = '0' + s;
-                        carry = 1;
-                    }
-                }
-            } else {
-                if (b[r] == '1') {
-                    if (carry == 0) {
-                        s = '1' + s;
-                        carry = 0;
-                    } else {
-                        s = '0' + s;
-                        carry = 1;
-                    }
-                } else {
-                    if (carry == 1) {
-                        s = '1' + s;
-                        carry = 0;
-                    } else {
-                        s = '0' + s;
-                        carry = 0;
-                    }
-                }
+                    s = '0' + s; carry = 1;
+                } break;
             }
             r++;
         }
         while (r < an) {
-            if (a[r] == '1') {
-                if (carry == 1) {
-                    s = '0' + s;
-                    carry = 1;
-                } else {
-                    s = '1' + s;
-                    carry = 0;
-                }
-            } else {
-                if (carry == 0) {
-                    s = '0' + s;
-                    carry = 0;
-                } else {
-                    s = '1' + s;
-                    carry = 0;
-                }
+            int v = ((a[r] - '0') * 2) + carry;
+            switch (v) {
+            case 0b00:
+                s = '0' + s;
+                carry = 0;
+                break;
+            case 0b11:
+                s = '0' + s;
+                carry = 1;
+                break;
+            default:
+                s = '1' + s;
+                carry = 0;
+                break;
             }
             r++;
         }
         while (r < bn) {
-            if (b[r] == '1') {
-                if (carry == 1) {
-                    s = '0' + s;
-                    carry = 1;
-                } else {
-                    s = '1' + s;
-                    carry = 0;
-                }
-            } else {
-                if (carry == 0) {
-                    s = '0' + s;
-                    carry = 0;
-                } else {
-                    s = '1' + s;
-                    carry = 0;
-                }
+            int v = ((b[r] - '0') * 2) + carry;
+            switch (v) {
+            case 0b00:
+                s = '0' + s;
+                carry = 0;
+                break;
+            case 0b11:
+                s = '0' + s;
+                carry = 1;
+                break;
+            default:
+                s = '1' + s;
+                carry = 0;
+                break;
             }
             r++;
         }
